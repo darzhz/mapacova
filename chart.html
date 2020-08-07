@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>MapaCova chart</title>
+    <meta name="author" content="darsh">
+    <meta name="description" content="containment-zones">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#262626">
+    <link rel="icon" type="image/x-icon" href="icon.svg" />
+    <link rel="manifest" href="manifest.json">
+    <script type="text/javascript" src="lib/p5/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<style type="text/css">
+    body{
+    margin: 0;
+    background-color: #262626;
+   /* recent changes*/
+    height: 100vh;
+}
+nav {
+    height: 5vh;
+    background: #ff000033;
+    z-index: 12;
+    position: absolute;
+    width: 100%;
+    box-shadow:1px 1px 50px 1px #ff000070;
+
+}
+.nav-links{
+    display: flex;
+    list-style: none;
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: auto;
+    margin-top: 0;
+}
+.nav-links li,a{
+    color: white;
+    text-decoration: none;
+    
+}
+
+@media screen and (max-width: 768px){
+    .line{
+        border-radius: 55px;
+        width:32px;
+        height:3px;
+        background: red;
+        margin: 5px;
+        box-shadow: 1px 1px 5px black;
+    }
+    nav {
+        position: absolute;
+        width: 0;
+    }
+    .hamburger{
+        position: fixed;
+        cursor: pointer;
+        right: 5%;
+        top:50%;
+        transform: translate(1%,-1050%);
+        z-index: 112;
+    }
+    .nav-links {
+        position: fixed;
+        opacity: 0.9;
+        /*background: crimson;*/
+       /* recent changes*/
+        background:linear-gradient(45deg, #ab0606f7, #0e76f76e);
+        height: 100vh;
+        width: 100%;
+        flex-direction: column;
+        clip-path:circle(100px at 90% -30%);
+        -webkit-clip-path:circle(100px at 90% -30%);
+        transition: all 1s ease-out;
+        pointer-events: none;
+    }
+    .nav-links.open {
+        clip-path:circle(1100px at 90% -30%);
+        -webkit-clip-path:circle(1100px at 90% -30%);
+        pointer-events: all;
+        z-index: 111;
+        margin:0;
+        padding: 0;
+        height: 100vh;
+    }
+    .nav-links li{
+        opacity: 0;
+    }
+    .nav-links li a{
+        font-size: 24px;
+        font-family: 'Teko', sans-serif;
+        text-shadow: 1px 2px 5px black;
+    }
+    .nav-links li:nth-child(1){
+        transition: all 0.5s ease 0.2s;
+    }
+    .nav-links li:nth-child(2){
+        transition: all 0.5s ease 0.4s;
+    }
+    .nav-links li:nth-child(3){
+        transition: all 0.5s ease 0.6s;
+    }
+    .nav-links li:nth-child(4){
+        transition: all 0.5s ease 0.8s;
+    }
+    .nav-links li:nth-child(5){
+        transition: all 0.5s ease 1.0s;
+    }
+    .nav-links li:nth-child(6){
+        transition: all 0.5s ease 1.2s;
+    }
+    li.fade {
+        opacity: 1;
+    } 
+}
+
+
+</style>
+
+<body>
+     <nav>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">🏡Home🏡</a></li>
+            <li><a href="chart.html">📈Statistics(stoinks)📈</a></li>
+            <li><a href="testing.html">💉Get Tested🧪</a></li>
+            <li><a href="https://kerala.gov.in/helpline">💁‍♂️Helpline☎</a></li>
+            <li><a href="http://www.maithrikochi.in/">😢Lonely,Depressed or Suicidal?😢</a></li>
+            <li><a href="https://www.instagram.com/oru_pavam_pyyan">🐞Found Bugs🐞</a></li>
+        </ul>
+    </nav>
+    <canvas id="myChart"></canvas>
+     <div id="table">
+    </div>
+    <script type="text/javascript">
+        let states = [];
+        let xaxis = [];
+        let yaxis = [];
+        function preload() {
+    distric = loadTable('data/yeh.csv',"header")
+}
+        function setup(){
+            noCanvas();
+            for (let i = 0; i < distric.getRowCount();i++){
+                let stat = distric.getString(i,'state');
+                states.push(stat);
+            }
+var counte = states.reduce(function(obj, b) {obj[b] = ++obj[b] || 1;return obj;}, {});
+      console.log(counte);
+      console.log(Object.keys(counte));
+      xaxis.push(Object.keys(counte));
+      yaxis.push(Object.values(counte));
+      axisDraw();
+        }
+function axisDraw(){
+        let abr = xaxis[0];
+        let val = yaxis[0];
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+      type: 'horizontalBar',
+    // The data for our dataset
+    data: {
+        labels: abr,
+        fontcolor:'white',
+        datasets: [{
+            label: 'containment-zones in kerala',
+            backgroundColor: '#f71b1b',
+            hoverBackgroundColor: 'rgb(255,0,0)',
+            borderColor: '#f71b1b',
+            data: val
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        legend: {
+            labels: {
+                fontColor: 'white',
+                defaultFontColor:'white'
+            }
+    }
+}
+});
+        tabledatthing(abr,val);
+}
+function tabledatthing(rows,columns){
+
+    let table = document.createElement('table');
+
+}
+    </script>
+    <script type="text/javascript" src="page.js"></script>
+</body>
+</html>

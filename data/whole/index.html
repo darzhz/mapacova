@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="utf-8">
+	<title>Example Title</title>
+	<meta name="author" content="Your Name">
+	<meta name="description" content="Example description">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="p5.js"></script>
+</head>
+
+<body>
+	<script>
+    getDat();
+async function getDat() {
+    const response = await fetch('rad.txt');
+    const data = await response.text();
+    let rows =  await data.split('\n');
+    let row1 = rows.toString();
+    let roww = row1.join("<br>");
+    let rowA =  await roww.replace(/		/g,",");
+    let rowB = await rowA.replace(/ /g,",");
+    document.write(rowB);
+}
+
+    </script>
+</body>
+
+</html>
