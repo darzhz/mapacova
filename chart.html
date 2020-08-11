@@ -11,7 +11,8 @@
     <link rel="icon" type="image/x-icon" href="icon.svg" />
     <link rel="manifest" href="manifest.json">
     <script type="text/javascript" src="lib/p5/p5.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> -->
+    <script type="text/javascript" src="lib/chart.js"></script>
 </head>
 <style type="text/css">
     body{
@@ -118,6 +119,42 @@ nav {
         opacity: 1;
     } 
 }
+#table1{
+    background-color: transparent;
+    width: 100%;
+    border: none;
+    color: white;
+    border-collapse: collapse;
+    font-family: monospace;
+    font-size: large;
+    font-weight: lighter;
+}
+#table1 td{
+    align-items: center;
+    text-align: center;
+    border-spacing: 1px;
+}
+#table1 tr:nth-child(odd){
+    background-color: #f71b1b;
+}
+#table1 tr:nth-child(even){
+    background-color: #6666662e;
+}
+#reff {
+    font-family: monospace;
+    font-size: smaller;
+    float: right;
+    color: white;
+}
+#reff2 {
+    font-family: monospace;
+    font-size: small;
+    float: right;
+    color: #f71b1b;
+    text-shadow: 1px 0.5px 1px black;
+    font-weight: bold;
+}
+
 
 
 </style>
@@ -140,6 +177,14 @@ nav {
     </nav>
     <canvas id="myChart"></canvas>
      <div id="table">
+        <table id="table1" align="center">
+            <tr>
+                <th>place</th>
+                <th>zones</th>
+            </tr>
+        </table>
+        <h2 id="reff">*Table might not be accurate please check Official KSDMA Data which is updated more often(definately more than this😜)</h2>
+        <p id="reff2"><a id="reff2" href="https://sdma.kerala.gov.in/containment-zones/">KSDMA(Kerala disaster management Authority) </a></p>
     </div>
     <script type="text/javascript">
         let states = [];
@@ -190,12 +235,23 @@ function axisDraw(){
     }
 }
 });
-        tabledatthing(abr,val);
+      tabledatthing(abr,val);
 }
 function tabledatthing(rows,columns){
+    let table = document.getElementById('table1');
+    for(let i = 0; i < rows.length;i++){
+        let row = document.createElement("tr");
+        let cell = document.createElement("td");
+        let cell1 = document.createElement("td");
+        let txt = document.createTextNode(rows[i]);
+        let txt1 = document.createTextNode(columns[i]);
+        cell.appendChild(txt);
+        cell1.appendChild(txt1);
+        row.appendChild(cell);
+        row.appendChild(cell1);
 
-    let table = document.createElement('table');
-
+        table.appendChild(row);
+    }
 }
     </script>
     <script type="text/javascript" src="page.js"></script>
