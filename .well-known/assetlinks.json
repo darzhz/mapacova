@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "me.glitch.mapacova.twa",
+                   "sha256_cert_fingerprints": ["60:02:FC:3E:C5:C0:C6:96:B6:CE:68:BC:CA:45:BD:0B:D7:C0:01:25:83:A6:92:84:92:68:1C:93:54:B8:26:56"] }
+    }]
