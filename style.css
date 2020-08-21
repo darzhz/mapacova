@@ -95,9 +95,9 @@ nav {
     .hamburger{
         position: fixed;
         cursor: pointer;
-        right: 5%;
-        top:50%;
-        transform: translate(1%,-1050%);
+        right: 93%;
+        top:3vh;
+        transform: translate(92vw,0%);
         z-index: 112;
     }
     .nav-links {
